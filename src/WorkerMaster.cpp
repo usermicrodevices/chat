@@ -81,7 +81,7 @@ void WorkerMaster::onChildMessage(int child_id, IpcMessage msg) {
 
 void WorkerMaster::broadcastToChildren(IpcMessage msg) {
     for (auto& conn : child_connections_) {
-        if (conn) conn->asyncSend(msg);
+        if (conn) conn->send(msg);
     }
 }
 

@@ -15,7 +15,7 @@ void WorkerClient::run() {
             IpcMessage out{0x10, {}};
             std::string str = msg.dump();
             out.payload.assign(str.begin(), str.end());
-            ipc_->asyncSend(out);
+            ipc_->send(out);
         }
     });
     ws_server_->start();
