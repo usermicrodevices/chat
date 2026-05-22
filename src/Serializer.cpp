@@ -1,13 +1,16 @@
 #include "Serializer.hpp"
+
 Serializer::Serializer(const std::string& db_path) {
     if (sqlite3_open(db_path.c_str(), &db_) != SQLITE_OK) {
         Logger::Error("Failed to open DB: {}", std::string(sqlite3_errmsg(db_)));
         throw std::runtime_error("DB open failed");
     }
 }
+
 Serializer::~Serializer() {
     if (db_) sqlite3_close(db_);
 }
+
 bool Serializer::initSchema() {
     const char* sql = R"(
         CREATE TABLE IF NOT EXISTS messages (
@@ -21,6 +24,7 @@ bool Serializer::initSchema() {
     )";
     return execSql(sql);
 }
+
 bool Serializer::storeMessage(const ChatMessage& msg) {
     sqlite3_stmt* stmt;
     const char* sql = "INSERT INTO messages (sender, content, timestamp, room) VALUES (?,?,?,?)";
@@ -33,6 +37,7 @@ bool Serializer::storeMessage(const ChatMessage& msg) {
     sqlite3_finalize(stmt);
     return ok;
 }
+
 std::vector<ChatMessage> Serializer::getRecentMessages(const std::string& room, int limit) {
     std::vector<ChatMessage> res;
     sqlite3_stmt* stmt;
@@ -52,6 +57,7 @@ std::vector<ChatMessage> Serializer::getRecentMessages(const std::string& room, 
     sqlite3_finalize(stmt);
     return res;
 }
+
 bool Serializer::execSql(const std::string& sql) {
     char* err = nullptr;
     if (sqlite3_exec(db_, sql.c_str(), nullptr, nullptr, &err) != SQLITE_OK) {

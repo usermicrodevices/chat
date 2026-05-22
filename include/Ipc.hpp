@@ -7,6 +7,8 @@
 
 #include <asio.hpp>
 
+#include "Logger.hpp"
+
 struct IpcMessage {
     uint8_t cmd;
     std::vector<uint8_t> payload;
@@ -21,7 +23,7 @@ public:
     ~IpcConnection();
 
     void start(MessageHandler handler, ErrorHandler err_handler);
-    void asyncSend(IpcMessage msg, std::function<void(std::error_code)> cb = nullptr);
+    void send(IpcMessage msg);
     void close();
 
 private:
