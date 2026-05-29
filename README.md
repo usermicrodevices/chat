@@ -3,6 +3,7 @@ simple C++ multiprocess web socket chat service
 
 ## Overview
 run as master process with fork configured number childs
+![image](./chat.png "test")
 
 ### requirements
 [ASIO](http://think-async.com) ([asio github](https://github.com/chriskohlhoff/asio))

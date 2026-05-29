@@ -49,7 +49,7 @@ async def main():
                 except KeyboardInterrupt as e:
                     sys.exit('KeyboardInterrupt\n')
                 except asyncio.CancelledError as e:
-                    print(f"Error: {e}", file=sys.stderr)
+                    print(f"Cancelled: {e}", file=sys.stderr)
                     return
                 except Exception as e:
                     print(f"Error: {e}", file=sys.stderr)
